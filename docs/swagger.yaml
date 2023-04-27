@@ -1,0 +1,58 @@
+basePath: /
+definitions:
+  main.GreetingRequest:
+    properties:
+      name:
+        example: World
+        type: string
+    type: object
+  main.GreetingResponse:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a sample server celler server.
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: get hello by name
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.GreetingResponse'
+      summary: Show an hello
+      tags:
+      - hello
+  /greeting:
+    post:
+      consumes:
+      - application/json
+      description: get greeting by name
+      parameters:
+      - description: Account ID
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.GreetingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.GreetingResponse'
+      summary: Show an Greeting
+      tags:
+      - greeting
+swagger: "2.0"
