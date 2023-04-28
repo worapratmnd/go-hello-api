@@ -1,4 +1,4 @@
-FROM golang:1.20
+FROM golang:1.20 as builder
 
 # Set destination for COPY
 WORKDIR /app
@@ -18,13 +18,20 @@ COPY . ./
 # https://docs.docker.com/engine/reference/builder/#copy
 
 # Build
-RUN CGO_ENABLED=0 GOOS=linux go build -o ./$APPNAME
+RUN CGO_ENABLED=0 GOOS=linux go build -o /$APPNAME
 
 # Optional:
 # To bind to a TCP port, runtime parameters must be supplied to the docker command.
 # But we can document in the Dockerfile what ports
 # the application is going to listen on by default.
 # https://docs.docker.com/engine/reference/builder/#expose
+EXPOSE 3001
+
+# second state
+FROM scratch
+
+COPY --from=builder /hello .
+
 EXPOSE 3001
 
 # Run
